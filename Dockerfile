@@ -10,6 +10,4 @@ RUN git clone https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
 WORKDIR /opt/app/boxfuse-sample-java-war-hello
 RUN mvn package
 WORKDIR /var/lib/tomcat9/webapps/
-RUN cp /opt/app/boxfuse-sample-java-war-hello/hello-1.0.war ./
-RUN mvn clean package -DskipTests
 EXPOSE 8080
