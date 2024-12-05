@@ -1,6 +1,4 @@
 FROM openjdk:8-jdk-alpine
-MAINTAINER Leonid Gorshkov <dzhangr.lv@gmail.com>
-
 RUN apk add --no-cache git curl tar bash procps
 
 ARG MAVEN_VERSION=3.9.9
