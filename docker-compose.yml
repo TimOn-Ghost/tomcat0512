@@ -5,9 +5,9 @@ services:
       dockerfile: Dockermaven
     volumes:
       - ~/.m2:/root/.m2
-    volumes_from:
       - tomcat
-    network_mode: bridge
+    networks:
+      net:
   tomcat:
     build:
       context: dockerfiles
