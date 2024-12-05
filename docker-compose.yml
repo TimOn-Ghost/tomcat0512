@@ -1,0 +1,25 @@
+services:
+  maven:
+    build:
+      context: dockerfiles
+      dockerfile: Dockermaven
+    volumes:
+      - ~/.m2:/root/.m2
+    volumes_from:
+      - tomcat
+    network_mode: bridge
+  tomcat:
+    build:
+      context: dockerfiles
+      dockerfile: Dockertomcat
+    ports:
+      - "8080:8080"
+    depends_on:
+      - maven
+    restart: unless-stopped
+
+networks:
+  net:
+    driver: bridge
+volumes:
+  tomcat:
