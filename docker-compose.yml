@@ -5,12 +5,13 @@ services:
       dockerfile_inline: |
         FROM maven:latest
         WORKDIR /app
-        RUN git clone https://github.com/boxfuse/boxfuse-sample-java-war-hello.git && \
-        cd boxfuse-sample-java-war-hello && mvn package
+        RUN git clone https://github.com/daticahealth/java-tomcat-maven-example
+        WORKDIR /app/java-tomcat-maven-example
+        RUN mvn clean package
     volumes:
       - type: volume
         source: app
-        target: /app/boxfuse-sample-java-war-hello/target
+        target: /app/java-tomcat-maven-example/target
   tomcat:
     image: tomcat:jre8-alpine
     ports:
@@ -23,4 +24,4 @@ services:
         source: app
         target: /usr/local/tomcat/webapps
 volumes:
-  app:
+    app:
