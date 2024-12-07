@@ -18,5 +18,9 @@ services:
     depends_on:
       - maven
     restart: unless-stopped
+    volumes:
+      - type: volume
+        source: app
+        target: /usr/local/tomcat/webapps
 volumes:
   app:
