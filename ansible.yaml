@@ -1,0 +1,34 @@
+---
+- name: install app
+  hosts: maven
+  become: yes
+
+  tasks:
+    - name: Install the latest version
+      dnf:
+        name:
+          - default-jdk
+          - git
+          - maven
+        state: present
+
+
+    - name: copy
+      copy:
+        src: file
+        dst: /home/1
+
+    - name: service run
+      service:
+        name: service
+        state: started
+
+- name: setup app
+  hosts: tomcat
+  become: yes
+
+  tasks:
+    - name: Install the latest version
+      dnf:
+        name: tomcat9
+        state: present
