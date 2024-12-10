@@ -1,34 +1,51 @@
 ---
-- name: install app
+- name: configuration maven and build
   hosts: maven
   become: yes
 
   tasks:
     - name: Install the latest version
-      dnf:
+      apt:
         name:
-          - default-jdk
           - git
           - maven
         state: present
 
+    - name: clone project git
+      git:
+        repo: https://github.com/daticahealth/java-tomcat-maven-example
+        dest: /opt/app/
 
-    - name: copy
-      copy:
-        src: file
-        dst: /home/1
+    - name: run mvn
+      shell: "mvn package"
+      args:
+        chdir: "/opt/app"
 
-    - name: service run
-      service:
-        name: service
-        state: started
+    - name: fetch file war
+      fetch:
+        src: /opt/app/target/java-tomcat-maven-example.war
+        dst: /tmp/
+        flat: yes
 
-- name: setup app
+
+- name: configuration tomcat
   hosts: tomcat
   become: yes
 
   tasks:
     - name: Install the latest version
-      dnf:
-        name: tomcat9
+      apt:
+        name:
+        - default-jdk
+        - tomcat9
         state: present
+
+    - name: copy file war
+      copy:
+        src: /tmp/java-tomcat-maven-example.war
+        dst: /var/lib/tomcat9/webapps/
+
+    - name: restart tomcat
+      service:
+        name: tomcat9
+        state: restarted
