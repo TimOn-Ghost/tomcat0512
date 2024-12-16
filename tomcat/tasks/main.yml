@@ -8,7 +8,7 @@
 - name: Copy war file from remote host
   synchronize:
     mode: push
-    src: /tmp/java-tomcat-maven-example.war
+    src: /opt/app/target/java-tomcat-maven-example.war
     dst: /var/lib/tomcat9/webapps/
   delegate_to: "{{ maven_srv }}"
   notify:
