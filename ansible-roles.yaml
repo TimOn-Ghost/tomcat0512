@@ -1,0 +1,14 @@
+---
+- name: Configuration maven and build
+  hosts: maven
+  become: yes
+
+  roles:
+    - maven
+
+- name: Configuration tomcat
+  hosts: tomcat
+  become: yes
+
+  roles:
+    - tomcat

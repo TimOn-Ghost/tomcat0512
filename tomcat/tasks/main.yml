@@ -1,0 +1,15 @@
+---
+- name: Ensure that tomcat9 and jdk is present
+  apt: name={{item}} state=present
+  with_items:
+    - tomcat9
+    - default-jdk
+
+- name: Copy war file from remote host
+  synchronize:
+    mode: push
+    src: /tmp/java-tomcat-maven-example.war
+    dst: /var/lib/tomcat9/webapps/
+  delegate_to: "{{ maven_srv }}"
+  notify:
+    - restart tomcat

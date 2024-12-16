@@ -1,0 +1,19 @@
+---
+# tasks file for maven
+- name: Ensure maven and git is present
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - maven
+    - git
+
+- name: git clone
+  git:
+    repo: https://github.com/daticahealth/java-tomcat-maven-example
+    dest: /opt/app/
+
+- name: maven package
+  command: mvn package
+  args:
+    chdir: /opt/app/
